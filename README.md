@@ -19,17 +19,23 @@ This `BR2_EXTERNAL` tree provides following Buildroot configurations:
 
 1. `ti_release_am62x_sk_defconfig` for Linux
 2. `ti_release_am62x_sk_rt_defconfig` for RT-Linux
-3. `ti_release_am62p_sk_defconfig` for Linux
-4. `ti_release_am62p_sk_rt_defconfig` for RT-Linux
-5. `ti_release_am62lx_evm_defconfig` for Linux
-6. `ti_release_am62lx_evm_rt_defconfig` for RT-Linux
+3. `ti_release_am62x_sip_defconfig` for Linux
+4. `ti_release_am62x_sip_rt_defconfig` for RT-Linux
+5. `ti_release_am62p_sk_defconfig` for Linux
+6. `ti_release_am62p_sk_rt_defconfig` for RT-Linux
+7. `ti_release_am62lx_evm_defconfig` for Linux
+8. `ti_release_am62lx_evm_rt_defconfig` for RT-Linux
+9. `ti_release_am64x_evm_defconfig` for Linux
+10. `ti_release_am64x_evm_rt_defconfig` for RT-Linux
 
-It supports following variants of AM62x EVM and AM62Lx EVM:
-- [SK-AM62](https://www.ti.com/tool/SK-AM62)
-- [SK-AM62B](https://www.ti.com/tool/SK-AM62B)
-- [SK-AM62B-P1](https://www.ti.com/tool/SK-AM62B-P1)
-- [SK-AM62P-LP](https://www.ti.com/tool/SK-AM62P-LP)
-- [AM62L-EVM](https://www.ti.com/tool/TMDS62LEVM)
+It supports following platforms:
+- [SK-AM62](https://www.ti.com/tool/SK-AM62) - Sitara AM62x Starter Kit
+- [SK-AM62B](https://www.ti.com/tool/SK-AM62B) - Sitara AM62B Starter Kit
+- [SK-AM62B-P1](https://www.ti.com/tool/SK-AM62B-P1) - Sitara AM62B-P1 Starter Kit
+- [SK-AM62P-LP](https://www.ti.com/tool/SK-AM62P-LP) - Sitara AM62P Low-Power Starter Kit
+- [AM62L-EVM](https://www.ti.com/tool/TMDS62LEVM) - Sitara AM62L Evaluation Module
+- [AM62X-SIP](https://www.ti.com/tool/SK-AM62-SIP) - Sitara AM62X System-in-Package (AM6254ATL)
+- [AM64X-EVM](https://www.ti.com/tool/PROCESSOR-SDK-AM64X) - Sitara AM64X Evaluation Module (AM642)
 
 It builds and packages following main components:
 - [ti-u-boot](https://git.ti.com/cgit/ti-u-boot/ti-u-boot/)
@@ -44,7 +50,9 @@ It builds and packages following main components:
 Pre-built buildroot SD card images are available at:
 
 - [PROCESSOR-SDK-AM62X](https://www.ti.com/tool/PROCESSOR-SDK-AM62X)
+- [PROCESSOR-SDK-AM62P](https://www.ti.com/tool/PROCESSOR-SDK-AM62P)
 - [AM62L-PROCESSOR-SDK](https://www.ti.com/tool/AM62L-PROCESSOR-SDK)
+- [PROCESSOR-SDK-AM64X](https://www.ti.com/tool/PROCESSOR-SDK-AM64X)
 
 ## Building Buildroot from source
 
@@ -74,11 +82,13 @@ information refer
 
 - The below table shows versions of buildroot and BR2_EXTERNAL for each platform.
 
-| Platform    | Buildroot version tag | Buildroot External Tree Tag |
-| ----------- | --------------------- |-----------------------------|
-|  SK-AM62B   |      2026.02          |      12.01.00.02.04         |
-|  SK-AM62P   |      2026.02          |      12.01.00.02.04         |
-|  AM62L-EVM  |      2026.02          |      12.01.00.02.04         |
+| Platform     | Buildroot version tag | Buildroot External Tree Tag |
+| ------------ | --------------------- |-----------------------------|
+|  SK-AM62B    |      2026.05          |      12.01.00.05.03         |
+|  SK-AM62X-SIP|      2026.05          |      12.01.00.05.03         |
+|  SK-AM62P    |      2026.05          |      12.01.00.05.03         |
+|  AM62L-EVM   |      2026.05          |      12.01.00.05.03         |
+|  AM64X-EVM   |      2026.05          |      12.01.00.05.03         |
 
 - Clone the Buildroot repository to local machine.
 
@@ -109,11 +119,17 @@ the external tree during the build process. To configure the system for build,
 choose any of the *defconfigs*  provided in this `BR2_EXTERNAL` tree. For example:
 
 ```bash
-# For AM62X Linux
+# For AM62X SK Linux
 $ make BR2_EXTERNAL=../buildroot-external-TI ti_release_am62x_sk_defconfig
 
-# For AM62X RT-Linux
+# For AM62X SK RT-Linux
 $ make BR2_EXTERNAL=../buildroot-external-TI ti_release_am62x_sk_rt_defconfig
+
+# For AM62X SIP Linux
+$ make BR2_EXTERNAL=../buildroot-external-TI ti_release_am62x_sip_defconfig
+
+# For AM62X SIP RT-Linux
+$ make BR2_EXTERNAL=../buildroot-external-TI ti_release_am62x_sip_rt_defconfig
 
 # For AM62P Linux
 $ make BR2_EXTERNAL=../buildroot-external-TI ti_release_am62p_sk_defconfig
@@ -126,6 +142,12 @@ $ make BR2_EXTERNAL=../buildroot-external-TI ti_release_am62lx_evm_defconfig
 
 # For AM62LX RT-Linux
 $ make BR2_EXTERNAL=../buildroot-external-TI ti_release_am62lx_evm_rt_defconfig
+
+# For AM64X Linux
+$ make BR2_EXTERNAL=../buildroot-external-TI ti_release_am64x_evm_defconfig
+
+# For AM64X RT-Linux
+$ make BR2_EXTERNAL=../buildroot-external-TI ti_release_am64x_evm_rt_defconfig
 ```
 
 - To further customize the Buildroot configuration, run `make menuconfig`. This
@@ -165,6 +187,7 @@ with the console on UART. You can log-in as `root` with no password.
 * [PROCESSOR-SDK-AM62X](https://www.ti.com/tool/PROCESSOR-SDK-AM62X#overview)
 * [PROCESSOR-SDK-AM62P](https://www.ti.com/tool/PROCESSOR-SDK-AM62P)
 * [AM62L-PROCESSOR-SDK](https://www.ti.com/tool/AM62L-PROCESSOR-SDK)
+* [PROCESSOR-SDK-AM64X](https://www.ti.com/tool/PROCESSOR-SDK-AM64X)
 
 # References
 
