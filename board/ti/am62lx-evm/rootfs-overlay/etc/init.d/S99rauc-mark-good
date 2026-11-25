@@ -1,0 +1,28 @@
+#!/bin/sh
+#
+# Mark the current RAUC boot slot as good after a successful boot.
+# This resets the boot-attempts counter, preventing U-Boot from
+# falling back to the other slot on the next reboot.
+#
+
+case "$1" in
+	start)
+		if [ -e /usr/bin/rauc ]; then
+			printf "Marking RAUC boot slot as good: "
+			rauc status mark-good booted
+			if [ $? -eq 0 ]; then
+				echo "OK"
+			else
+				echo "FAIL (non-fatal)"
+			fi
+		fi
+		;;
+	stop|restart|reload)
+		;;
+	*)
+		echo "Usage: $0 {start}"
+		exit 1
+		;;
+esac
+
+exit 0

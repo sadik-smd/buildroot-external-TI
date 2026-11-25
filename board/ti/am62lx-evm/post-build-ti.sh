@@ -36,3 +36,6 @@ cp $BUILD_DIR/linux-*/arch/arm64/boot/dts/ti/k3-am62l3-evm-dsi-rpi-7inch-panel.d
 mv $BINARIES_DIR/tiboot3-am62lx-hs-fs-evm.bin $BINARIES_DIR/tiboot3.bin
 cp $BUILD_DIR/ti-k3-boot-firmware-*/ti-connectivity/* $TARGET_DIR/lib/firmware/ti-connectivity/
 cp $BR2_EXTERNAL_TI_PATH/board/ti/am62lx-evm/uEnv.txt $BINARIES_DIR/uEnv.txt
+
+# Ensure the RAUC mark-good init script is executable on the target
+chmod 755 $TARGET_DIR/etc/init.d/S99rauc-mark-good

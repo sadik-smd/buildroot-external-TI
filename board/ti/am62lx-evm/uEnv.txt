@@ -1,11 +1,9 @@
-# This uEnv.txt file can contain additional environment settings that you
-# want to set in U-Boot at boot time.  This can be simple variables such
-# as the serverip or custom variables.  The format of this file is:
-#    variable=value
-# NOTE: This file will be evaluated after the bootcmd is run and the
-#       bootcmd must be set to load this file if it exists (this is the
-#       default on all newer U-Boot images.  This also means that some
-#       variables such as bootdelay cannot be changed by this file since
-#       it is not evaluated until the bootcmd is run.
-
+bootpart_a=1:2
+bootpart_b=1:3
 optargs=vt.global_cursor_default=0
+rauc_init=setenv BOOT_ORDER "A B"; setenv BOOT_A_LEFT 3; setenv BOOT_B_LEFT 3; setenv bootpart ${bootpart_a}; saveenv
+rauc_set_slot_a=setenv BOOT_ORDER "A B"; setenv BOOT_B_LEFT 3; setexpr BOOT_A_LEFT ${BOOT_A_LEFT} - 1; setenv bootpart ${bootpart_a}; saveenv
+rauc_set_slot_b=setenv BOOT_ORDER "B A"; setenv BOOT_A_LEFT 3; setexpr BOOT_B_LEFT ${BOOT_B_LEFT} - 1; setenv bootpart ${bootpart_b}; saveenv
+rauc_boot_ab=if test ${BOOT_A_LEFT} -gt 0; then run rauc_set_slot_a; elif test ${BOOT_B_LEFT} -gt 0; then run rauc_set_slot_b; fi
+rauc_boot_ba=if test ${BOOT_B_LEFT} -gt 0; then run rauc_set_slot_b; elif test ${BOOT_A_LEFT} -gt 0; then run rauc_set_slot_a; fi
+uenvcmd=if test -z "${BOOT_ORDER}"; then run rauc_init; elif test "${BOOT_ORDER}" = "A B"; then run rauc_boot_ab; else run rauc_boot_ba; fi; run bootcmd_ti_mmc
